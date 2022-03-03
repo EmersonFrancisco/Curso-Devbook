@@ -26,36 +26,36 @@ func main() {
 	// FIM DOS OPERADORES DE ATRIBUIÇÃO
 
 	// OPERADORES RELACIONAIS
-	fmt.Println(1 > 2)
-	fmt.Println(1 >= 2)
-	fmt.Println(1 == 2)
-	fmt.Println(1 <= 2)
-	fmt.Println(1 > 2)
-	fmt.Println(1 < 2)
-	fmt.Println(1 != 2)
+	fmt.Println(1 > 2)  // maior
+	fmt.Println(1 >= 2) // maior ou igual
+	fmt.Println(1 == 2) // igual
+	fmt.Println(1 <= 2) // menor ou igual
+	fmt.Println(1 > 2)  // maior
+	fmt.Println(1 < 2)  // menor
+	fmt.Println(1 != 2) // diferente
 	// FIM DOS RELACIONAIS
 
 	// OPERADORES LÓGICOS
 	fmt.Println("--------------")
 	verdadeiro, falso := true, false
-	fmt.Println(verdadeiro && falso)
-	fmt.Println(verdadeiro || falso)
-	fmt.Println(!verdadeiro)
+	fmt.Println(verdadeiro && falso) // && significa "E"
+	fmt.Println(verdadeiro || falso) // || significa "ou"
+	fmt.Println(!verdadeiro)         //! sigifica diferente de
 	fmt.Println(!falso)
 	// FIM DOS OPERADORES LÓGICOS
 
 	// OPERADORES UNÁRIOS
 	fmt.Println("--------------")
 	numero := 10
-	numero++
+	numero++     // incrementa  + 1
 	numero += 15 // numero = numero + 15
 	fmt.Println(numero)
 
-	numero--
+	numero--     // subtrai - 1
 	numero -= 20 // numero = numero - 20
 
-	numero *= 3 // numero = numero * 3
-	numero /= 10
+	numero *= 3  // numero = numero * 3
+	numero /= 10 // numero = numero / 10
 	numero %= 3
 
 	fmt.Println(numero)
