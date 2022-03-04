@@ -1,9 +1,10 @@
 package main
 
 import (
-	"linha-de-comando/app"
 	"log"
 	"os"
+
+	"linha-de-comando/app"
 )
 
 func main() {
