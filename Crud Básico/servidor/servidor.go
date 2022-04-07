@@ -33,24 +33,27 @@ func CriarUsuario(w http.ResponseWriter, r *http.Request) {
 
 	db, erro := banco.Conectar()
 	if erro != nil {
-		w.Write([]byte("Erro ao converter conectar no banco de dados!"))
+		w.Write([]byte("Erro ao conectar no banco de dados!"))
 		return
 	}
 	defer db.Close()
 
+	//PREPARE STATEMENT -- AJUDA A EVITAR SQL INJECTION
 	statement, erro := db.Prepare("insert into usuarios (nome, email) values (?, ?)")
 	if erro != nil {
 		w.Write([]byte("Erro ao criar o statement!"))
 		return
 	}
+	// TEM QUE FECHAR IGUAL AO BANCO
 	defer statement.Close()
 
+	//EXECUTANDO O STATEMENT
 	insercao, erro := statement.Exec(usuario.Nome, usuario.Email)
 	if erro != nil {
 		w.Write([]byte("Erro ao executar o statement!"))
 		return
 	}
-
+	// PEGAR O ID INSERIDO PARA RETORNAR AO CLIENTE INFORMAÇÃO DE SUCESSO NO PUT
 	idInserido, erro := insercao.LastInsertId()
 	if erro != nil {
 		w.Write([]byte("Erro ao obter o id inserido!"))
@@ -73,6 +76,7 @@ func BuscarUsuarios(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
+	//query prepara a busca, como se fosse um statement
 	linhas, erro := db.Query("select * from usuarios")
 	if erro != nil {
 		w.Write([]byte("Erro ao buscar os usuários"))
@@ -129,6 +133,12 @@ func BuscarUsuario(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	if usuario.ID == 0 {
+		w.WriteHeader(http.StatusNotFound)
+		w.Write([]byte("Não foi encontrato usuario com ID informado!"))
+		return
+	}
+
 	w.WriteHeader(http.StatusOK)
 	if erro := json.NewEncoder(w).Encode(usuario); erro != nil {
 		w.Write([]byte("Erro ao converter o usuário para JSON!"))
@@ -178,7 +188,6 @@ func AtualizarUsuario(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusNoContent)
-
 }
 
 // DeletarUsuario remove um usuário do banco de dados
